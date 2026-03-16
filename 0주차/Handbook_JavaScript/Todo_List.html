@@ -128,35 +128,35 @@
 
     function createTodoItem(text) {
 
-    const li = document.createElement("li");
+        const li = document.createElement("li");
 
-    const span = document.createElement("span");
-    span.textContent = text;
+        const span = document.createElement("span");
+        span.textContent = text;
 
-    const completeBtn = document.createElement("button");
-    completeBtn.textContent = "완료";
-    completeBtn.className = "complete";
+        const completeBtn = document.createElement("button");
+        completeBtn.textContent = "완료";
+        completeBtn.className = "complete";
 
-    li.append(span, completeBtn);
+        li.append(span, completeBtn);
 
-    completeBtn.addEventListener("click", () => {
+        completeBtn.addEventListener("click", () => {
 
-        completeBtn.remove();
+            completeBtn.remove();
 
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "삭제";
-        deleteBtn.className = "delete";
+            const deleteBtn = document.createElement("button");
+            deleteBtn.textContent = "삭제";
+            deleteBtn.className = "delete";
 
-        li.append(deleteBtn);
-        doneList.append(li);
+            li.append(deleteBtn);
+            doneList.append(li);
 
-        deleteBtn.addEventListener("click", () => {
-        li.remove();
+            deleteBtn.addEventListener("click", () => {
+            li.remove();
+            });
+
         });
 
-    });
-
-    return li;
+        return li;
     }
 
     input.addEventListener("keyup", (e) => {
