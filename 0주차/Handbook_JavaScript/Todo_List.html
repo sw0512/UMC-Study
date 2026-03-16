@@ -103,7 +103,7 @@
 </head>   
 <body>
 <header>
-    <h1>UMC Study Plan</h1>
+    <h1>Study Plan</h1>
 </header>
 <hr>
 <main>
@@ -140,7 +140,6 @@
         li.append(span, completeBtn);
 
         completeBtn.addEventListener("click", () => {
-
             completeBtn.remove();
 
             const deleteBtn = document.createElement("button");
@@ -153,7 +152,6 @@
             deleteBtn.addEventListener("click", () => {
             li.remove();
             });
-
         });
 
         return li;
@@ -161,15 +159,15 @@
 
     input.addEventListener("keyup", (e) => {
 
-    if (e.key !== "Enter") return;
+        if (e.key !== "Enter") return;
 
-    const text = input.value.trim();
-    if (text === "") return;
+        const text = input.value.trim();
+        if (text === "") return;
 
-    const todoItem = createTodoItem(text);
-    todoList.append(todoItem);
+        const todoItem = createTodoItem(text);
+        todoList.append(todoItem);
 
-    input.value = "";
+        input.value = "";
 
     });
 </script>   
