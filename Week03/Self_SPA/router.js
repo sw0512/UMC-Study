@@ -1,22 +1,49 @@
 import { Home } from "./pages/Home.js";
 import { About } from "./pages/About.js";
-import { Contact } from "./pages/Contact.js";
+import { User } from "./pages/User.js";
 
-const routes = {
-  "/": Home,
-  "/about": About,
-  "/contact": Contact,
-};
+// 선언적 라우팅 구조
+const routes = [
+  { path: "/", component: Home },
+  { path: "/about", component: About },
+  { path: "/user/:id", component: User },
+];
 
-export function render(path) {
+// 경로 매칭 함수
+function matchRoute(pathname) {
+  for (const route of routes) {
+    const paramNames = [];
+    
+    const regexPath = route.path.replace(/:([^/]+)/g, (_, key) => {
+      paramNames.push(key);
+      return "([^/]+)";
+    });
+
+    const match = pathname.match(new RegExp(`^${regexPath}$`));
+    
+    if (match) {
+      const params = {};
+      paramNames.forEach((name, i) => {
+        params[name] = match[i + 1];
+      });
+
+      return { component: route.component, params };
+    }
+  }
+
+  return null;
+}
+
+// 렌더 함수
+export function render(pathname) {
   const app = document.getElementById("app");
 
-  if (!app) {
-    console.error("app element not found");
+  const route = matchRoute(pathname);
+
+  if (!route) {
+    app.innerHTML = "<h1>404</h1>";
     return;
   }
 
-  const page = routes[path] || (() => "<h1>404 Not Found</h1>");
-
-  app.innerHTML = page();
+  app.innerHTML = route.component(route.params || {});
 }
