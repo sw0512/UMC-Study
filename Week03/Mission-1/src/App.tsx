@@ -1,10 +1,11 @@
-import React from 'react'
+// import React from 'react'
+import MoviePage from './pages/MoviePage';
 
 const App = () => {
   return (
-    <div>
-      
-    </div>
+    <>
+      <MoviePage />
+    </>
   )
 }
 
