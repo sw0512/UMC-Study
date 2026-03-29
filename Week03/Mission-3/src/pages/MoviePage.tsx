@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios';
 import type { Movie, MovieResponse } from '../types/movie';
 import MovieCard from '../components/MovieCard';
