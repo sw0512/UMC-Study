@@ -14,7 +14,7 @@ const MovieDetailPage = () => {
     const [credits, setCredits] = useState<CreditsResponse | null>(null);
     const [isPending, setIsPending] = useState(true);
     const [isError, setIsError] = useState(false);
-
+    
     const { movieId } = useParams<{ movieId: string }>();
 
     useEffect(() => {
