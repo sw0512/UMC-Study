@@ -1,17 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useGetInfiniteLpList from "../hooks/queries/useGetInfiniteLpList";
 import { PAGENATION_ORDER } from "../enums/common";
-import useGetLpList from "../hooks/queries/useGetLpList";
+import { useInView } from "react-intersection-observer";
 import LpCard from "../components/LpCard/LpCard";
 import LpCardSkeletonList from "../components/LpCard/LpCardSkeletonList";
-import { queryClient } from "../App";
-import { QUERY_KEY } from "../constants/key";
 
 const HomePage = () => {
+  const [search, setSearch] = useState("");
   const [order, setOrder] = useState<PAGENATION_ORDER>(PAGENATION_ORDER.desc);
 
-  const { data, isPending, isError, refetch } = useGetLpList({ order, limit: 50 });
+  const {
+    data: lps,
+    isFetching,
+    hasNextPage,
+    isPending,
+    fetchNextPage,
+    isError,
+  } = useGetInfiniteLpList(10, search, order);
 
-  const lps = data?.data.data ?? [];
+  const { ref, inView } = useInView({ threshold: 0 });
+
+  useEffect(() => {
+    if (inView && !isFetching && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, isFetching, hasNextPage, fetchNextPage]);
 
   const handleToggleOrder = () => {
     setOrder((prev) =>
@@ -45,25 +58,21 @@ const HomePage = () => {
       </div>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
-        {isPending && <LpCardSkeletonList count={8} />}
+        {isPending && <LpCardSkeletonList count={10} />}
         {isError && (
           <div className="col-span-full flex flex-col items-center gap-3 py-16 text-gray-400">
             <p>데이터를 불러오는 중 오류가 발생했습니다.</p>
-            <button
-              onClick={() => {
-                queryClient.invalidateQueries({ queryKey: [QUERY_KEY.lps] });
-                refetch();
-              }}
-              className="px-4 py-2 bg-white/10 rounded hover:bg-white/20 text-white text-sm transition"
-            >
-              다시 시도
-            </button>
           </div>
         )}
-        {lps.map((lp) => (
-          <LpCard key={lp.id} lp={lp} />
-        ))}
+        {lps?.pages
+          ?.map((page) => page.data.data)
+          ?.flat()
+          ?.map((lp) => (
+            <LpCard key={lp.id} lp={lp} />
+          ))}
+        {isFetching && <LpCardSkeletonList count={10} />}
       </div>
+      <div ref={ref} className="h-20" />
     </div>
   );
 };
