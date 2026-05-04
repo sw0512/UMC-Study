@@ -1,4 +1,4 @@
-import type { CursorBasedResponse, commonResponseDto } from "./common";
+import type { commonResponseDto } from "./common";
 
 export type Tags = {
   id: number;
@@ -32,6 +32,11 @@ export type LpDetail = Lp & {
   };
 };
 
-export type ResponseLpListDto = CursorBasedResponse<{ data: Lp[] }>;
+// Mission-2 무한스크롤: hasNext/nextCursor가 data 안에 중첩된 구조
+export type ResponseLpListDto = commonResponseDto<{
+  data: Lp[];
+  hasNext: boolean;
+  nextCursor: number;
+}>;
 
 export type ResponseLpDetailDto = commonResponseDto<LpDetail>;

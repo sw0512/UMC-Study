@@ -28,7 +28,9 @@ const HomePage = () => {
 
   const handleToggleOrder = () => {
     setOrder((prev) =>
-      prev === PAGENATION_ORDER.desc ? PAGENATION_ORDER.asc : PAGENATION_ORDER.desc
+      prev === PAGENATION_ORDER.desc
+        ? PAGENATION_ORDER.asc
+        : PAGENATION_ORDER.desc,
     );
   };
 
