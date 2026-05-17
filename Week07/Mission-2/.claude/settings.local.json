@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(diff -rq --exclude=\"node_modules\" --exclude=\"pnpm-lock.yaml\" --exclude=\".DS_Store\" /Users/sangukim/Git/UMC/UMC-Study/Week06/Mission-2/src /Users/sangukim/Git/UMC/UMC-Study/Week07/Mission-1/src)"
+    ]
+  }
+}
